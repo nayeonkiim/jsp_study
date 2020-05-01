@@ -1,1 +1,1 @@
-jsp prject upload!
+jsp project upload!
