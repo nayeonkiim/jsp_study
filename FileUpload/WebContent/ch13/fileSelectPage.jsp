@@ -20,7 +20,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>File Select Page</title>
+		<title>File upload Page</title>
 		<script type="text/javascript">
 
 			/* frmName1의 요소 value값을 frmName2의 요소 value값에 넣어줌 */
