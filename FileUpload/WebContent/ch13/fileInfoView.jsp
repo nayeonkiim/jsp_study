@@ -12,7 +12,7 @@
 	String encType = "UTF-8";
 	int maxSize = 10*1024*1024;
 	
-	//getServletContext()를 이용하여 ServletContext 객체 얻어 saveFolder의 실제 경로 얻어옴
+	/*  getServletContext()를 이용하여 ServletContext 객체 얻어 saveFolder의 실제 경로 얻어옴 */
 	ServletContext context = getServletContext();  
 	ArrayList saveFiles = new ArrayList();
 	ArrayList origFiles = new ArrayList();
