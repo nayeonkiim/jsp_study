@@ -92,7 +92,7 @@
 			<form name="frmName2" method="post" enctype="multipart/form-data">
 				<table border="1">
 					<tr>
-						<td>
+						<td width="50%">
 							<!-- frmName1의 텍스트 필드에 입력된 값들이 담김. -->
 							<input type="hidden" name="user" value="<%=getParam(request,"user") %>">
 							<input type="hidden" name="title" value="<%=getParam(request,"title") %>">

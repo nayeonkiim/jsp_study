@@ -8,7 +8,7 @@
 <!--java.util.*은 Enumeration 사용위해,  java.io.*은 IOException으로 예외 받기 위해-->
 
 <%
-	String saveFolder = "C:/Users/rlask/eclipse-workspace/FileUpload/WebContent/ch13/filestorage/";
+	String saveFolder = "C:/Users/rlask/git/jsp_study/FileUpload/WebContent/ch13/filestorage/";
 	String encType = "UTF-8";
 	int maxSize = 10*1024*1024;
 	
