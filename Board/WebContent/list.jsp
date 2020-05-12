@@ -1,3 +1,4 @@
+<!--게시판 메인 화면( 페이징,   -->
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@page import="com.board.BoardBean" %>
@@ -17,7 +18,7 @@
 	int nowBlock = 1;  //현재 블럭
 	
 	int start=0; //tblBoard 테이블의 select 시작 번호
-	int end=10; //시작번호로 부터 가져올 select 개수
+	int end=10; //시작번호로 부터 가져올 select 개수 
 	
 	int listSize = 0; //현재 읽어온 게시물의 수
 	
@@ -33,13 +34,12 @@
 			keyField="";
 		}
 	}
-	if(request.getParameter("nowPage") != "null"){
+	if(request.getParameter("nowPage") != null){
 		nowPage = Integer.parseInt(request.getParameter("nowPage"));  
 	}
-	
 	start = (nowPage * numPerPage)-numPerPage;
-	end = numPerPage;
-	
+	end = numPerPage; 
+	 
 	totalRecord = bMgr.getTotalCount(keyField, keyWord);
 	totalPage = (int)Math.ceil((double)totalRecord/numPerPage);
 	nowBlock = (int)Math.ceil((double)nowPage/pagePerBlock);
