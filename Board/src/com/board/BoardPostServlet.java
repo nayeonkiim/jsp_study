@@ -12,10 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 public class BoardPostServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("utf-8");
 		BoardMgr bmgr = new BoardMgr();
 		bmgr.insertBoard(request);
 		response.sendRedirect("list.jsp");
 	}
-
 }

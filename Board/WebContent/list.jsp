@@ -71,6 +71,7 @@
 					return;
 				}
 				document.searchFrm.submit();
+				
 			}
 			function list()
 			{
@@ -168,7 +169,7 @@
 							</a>
 					<%} %>&nbsp;
 										
-							<%if (totalBlock > nowBlock) {%>
+							<%if (totalPage >= pageEnd) {%>
 								<a href="javascript:block('<%=nowBlock+1%>')">.....next</a>
 							<%} %>&nbsp;
 				<%} %>

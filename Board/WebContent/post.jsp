@@ -5,6 +5,14 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>글쓰기</title>
+		<script type="text/javascript">
+			function warning(){
+				var v = confirm( "현재 작성 중인 글은 저장되지 않습니다." );
+				if(v == true){
+					location.href="list.jsp";
+				}
+			}
+		</script>
 	</head>
 	<body>
 		<table align="center">
@@ -13,9 +21,10 @@
 			</tr>	
 		</table>
 		
-		<!-- 서블릿 BoardPostServlet의 매핑, 설정된 boardPost 호출 -->
+		<!-- 서블릿 BoardPostServlet의 매핑, 설정된 boardPost 호출  action을 boardPost로 설정했으므로 전체 작성된 값들이 넘어감-->
 		<form action="boardPost" name="postFrm" method="post" enctype="multipart/form-data">
 			<table align="center">
+	
 				<tr>
 					<td colspan="2" align="center"><hr/> </td>
 				</tr>
@@ -47,17 +56,19 @@
 					</td>
 				</tr>
 				<tr>
-					<td colspan="2"><hr/></td>
+					<td colspan="2"><hr/>
+					</td>
 				</tr>
 				<tr>
 					<td colspan="2" align="center">
 						<input type="submit" value="등록">
 						<input type="reset" value="다시쓰기">
-						<input type="button" value="리스트" onClick="javascript:location.href='list.jsp'">
-					</td>
+						<input type="button" value="리스트" onClick="javascript:warning()">
+ 					</td>
 				</tr>							
 			</table>
 			<input type="hidden" name="ip" value="<%=request.getRemoteAddr() %>">  <!-- 게시물을 등록한 사용자의 IP 주소 가져옴 -->
+			
 		</form>
 	</body>
 </html>
