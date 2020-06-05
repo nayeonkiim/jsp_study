@@ -1,0 +1,29 @@
+@charset "UTF-8";
+
+.login_form{
+	text-align: center;
+	background-color: #CCEEFF;
+	padding: 20px 0;
+	position: relative;
+	height: 200px;
+}
+
+.login_form h1{
+	margin: 10px 0; 
+}
+
+.login_form .table{
+	position: absolute;
+	left: 30%;
+	border: 1px solid #c0c0c0;
+}
+
+.login_form .table tr td{
+	padding: 5px 40px;
+}
+
+.login_form .button{
+	position: absolute;
+	left: 43%;
+	top: 70%;
+}
