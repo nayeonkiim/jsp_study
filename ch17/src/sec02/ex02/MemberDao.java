@@ -66,7 +66,6 @@ public class MemberDao {
 			pstmt.setString(2, pwd);
 			pstmt.setString(3, name);
 			pstmt.setString(4, email);
-			pstmt.setString(4, email);
 			pstmt.executeUpdate();
 			pstmt.close();
 			con.close();
@@ -105,6 +104,7 @@ public class MemberDao {
 	
 	// 회원 수정을 db에 반영
 	public void modMember(MemberVO vo) {
+		
 		String sql = "update t_member set pwd=?, name=?, email=? where id=?";
 		try {
 			con = dataFactory.getConnection();
@@ -120,6 +120,24 @@ public class MemberDao {
 			e.printStackTrace();
 		}
 	}
+	
+	//해당 아이디 존재하는지 확인
+	public boolean checkID(String id) {
+		boolean result = false;
+		String sql = "select if(count(*)=1,'true','false') as result from t_member where id=?";
+		try {
+			con = dataFactory.getConnection();
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, id);
+			ResultSet rs = pstmt.executeQuery();
+			rs.next();
+			result = Boolean.parseBoolean(rs.getString("result"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
 	/*
 	 * // 회원 수정을 db에 반영 public boolean delMember(String id, String pwd) {
 	 * 
