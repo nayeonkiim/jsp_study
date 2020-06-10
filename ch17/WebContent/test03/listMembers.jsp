@@ -31,7 +31,14 @@ request.setCharacterEncoding("UTF-8");
             alert("회원 정보를 삭제했습니다.");
         } 
       </script>
-</c:when>
+	</c:when>
+	 <c:when test='${msg=="not_match" }'>
+	      <script>
+	         window.onload=function(){
+	            alert("아이디와 비밀번호가 일치하지 않습니다.");
+	         }
+	      </script>
+	  </c:when>
 </c:choose>
 
    <meta  charset="UTF-8">
@@ -54,7 +61,7 @@ request.setCharacterEncoding("UTF-8");
    <table align="center" border="1" >
       <tr align="center" bgcolor="lightgreen">
          <td width="7%" ><b>아이디</b></td>
-         <td width="7%" ><b>비밀번호</b></td>
+         <!-- <td width="7%" ><b>비밀번호</b></td> -->
          <td width="7%" ><b>이름</b></td>
          <td width="7%"><b>이메일</b></td>
          <td width="7%" ><b>가입일</b></td>
@@ -75,7 +82,7 @@ request.setCharacterEncoding("UTF-8");
       <c:forEach  var="mem" items="${memberList }" >
         <tr align="center">
           <td>${mem.id }</td>
-          <td>${mem.pwd }</td>
+       <%--    <td>${mem.pwd }</td> --%>
           <td>${mem.name}</td>     
           <td>${mem.email }</td>     
           <td>${mem.joinDate}</td>

@@ -1,6 +1,7 @@
 package sec02.ex02;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -32,6 +33,7 @@ public class MemberController2 extends HttpServlet {
 		String nextPage = null;
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html;charset=utf-8");
+		PrintWriter out = response.getWriter();
 		String action = request.getPathInfo();
 		System.out.println("action:" + action);
 		if (action == null || action.equals("/listMembers.do")) {
@@ -62,16 +64,21 @@ public class MemberController2 extends HttpServlet {
 		     MemberVO memberVO = new MemberVO(id, pwd, name, email);
 		     memberDao.modMember(memberVO);
 		     request.setAttribute("msg", "modified");
+		     nextPage = "/member/listMembers.do";
 		 }else if(action.equals("/delMember.do")){ 
 			 String id = request.getParameter("id"); 
 			 String pwd = request.getParameter("pwd"); 
 		 	 boolean result = memberDao.equalMember(id,pwd);
 		 	 if(result == true) {
-		 		 memberDao.delMember(id);
+		 	 	 memberDao.delMember(id);
 			 	 request.setAttribute("msg", "deleted");
 			 	 nextPage="/member/listMembers.do";
 		 	 }
-		 	
+		 	 else {
+		 		 request.setAttribute("msg", "not_match");
+		 		 nextPage="/member/listMembers.do";
+		 	 }
+		
 		}else {
 			List<MemberVO> membersList = memberDao.listMember();
 			request.setAttribute("membersList", membersList);
