@@ -1,6 +1,5 @@
 package sec02.ex02;
 
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,18 +15,17 @@ public class MemberDao {
 	private DataSource dataFactory;
 	private Connection con;
 	private PreparedStatement pstmt;
-	
-	public MemberDao(){
+
+	public MemberDao() {
 		try {
 			Context ctx = new InitialContext();
-			Context envContext = (Context)ctx.lookup("java:/comp/env");
-			dataFactory = (DataSource)envContext.lookup("jdbc/mysql");
+			Context envContext = (Context) ctx.lookup("java:/comp/env");
+			dataFactory = (DataSource) envContext.lookup("jdbc/mysql");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
-	
+
 	public List<MemberVO> listMember() {
 		List<MemberVO> mlist = new ArrayList<MemberVO>();
 		String sql = "select * from t_member order by id desc";
@@ -35,13 +33,13 @@ public class MemberDao {
 			con = dataFactory.getConnection();
 			pstmt = con.prepareStatement(sql);
 			ResultSet rs = pstmt.executeQuery();
-			while(rs.next()) {
+			while (rs.next()) {
 				String id = rs.getString("id");
 				String pwd = rs.getString("pwd");
 				String name = rs.getString("name");
 				String email = rs.getString("email");
 				Date joinDate = rs.getDate("joinDate");
-				MemberVO vo = new MemberVO(id,pwd,name,email,joinDate);
+				MemberVO vo = new MemberVO(id, pwd, name, email, joinDate);
 				mlist.add(vo);
 			}
 			rs.close();
@@ -52,7 +50,7 @@ public class MemberDao {
 		}
 		return mlist;
 	}
-	
+
 	public void addMember(MemberVO vo) {
 		try {
 			con = dataFactory.getConnection();
@@ -60,7 +58,7 @@ public class MemberDao {
 			String pwd = vo.getPwd();
 			String name = vo.getName();
 			String email = vo.getEmail();
-			String sql = "insert into t_member (id,pwd,name,email) value (?,?,?,?)"; 
+			String sql = "insert into t_member (id,pwd,name,email) value (?,?,?,?)";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, id);
 			pstmt.setString(2, pwd);
@@ -73,7 +71,7 @@ public class MemberDao {
 			e.printStackTrace();
 		}
 	}
-	
+
 	// 아이디 회원정보 조회
 	public MemberVO findMember(String id) {
 		MemberVO memvo = null;
@@ -83,17 +81,16 @@ public class MemberDao {
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, id);
 			ResultSet rs = pstmt.executeQuery();
-			if(rs.next()) {
+			if (rs.next()) {
 				String pwd = rs.getString("pwd");
 				String name = rs.getString("name");
 				String email = rs.getString("email");
 				Date joinDate = rs.getDate("joinDate");
-				memvo = new MemberVO(id,pwd,name,email,joinDate);
+				memvo = new MemberVO(id, pwd, name, email, joinDate);
 				pstmt.close();
 				rs.close();
 				con.close();
-			}
-			else {
+			} else {
 				return null;
 			}
 		} catch (Exception e) {
@@ -101,10 +98,10 @@ public class MemberDao {
 		}
 		return memvo;
 	}
-	
+
 	// 회원 수정을 db에 반영
 	public void modMember(MemberVO vo) {
-		
+
 		String sql = "update t_member set pwd=?, name=?, email=? where id=?";
 		try {
 			con = dataFactory.getConnection();
@@ -120,8 +117,8 @@ public class MemberDao {
 			e.printStackTrace();
 		}
 	}
-	
-	//해당 아이디 존재하는지 확인
+
+	// 해당 아이디 존재하는지 확인
 	public boolean checkID(String id) {
 		boolean result = false;
 		String sql = "select if(count(*)=1,'true','false') as result from t_member where id=?";
@@ -137,13 +134,36 @@ public class MemberDao {
 		}
 		return result;
 	}
+
+	public boolean equalMember(String id, String pwd) {
+		boolean result = false;
+		String sql = "select if(count(*)=1, 'true','false') as result from t_member where id=? and pwd=?";
+		try {
+			con = dataFactory.getConnection();
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, id);
+			pstmt.setString(2, pwd);
+			ResultSet rs = pstmt.executeQuery();
+			rs.next();
+			result = Boolean.parseBoolean(rs.getString("result"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
 	
-	/*
-	 * // 회원 수정을 db에 반영 public boolean delMember(String id, String pwd) {
-	 * 
-	 * }
-	 */
-}	
-
-
-
+	
+	  // 회원 수정을 db에 반영
+	public void delMember(String id) {
+		String sql = "delete from t_member where id=?";
+		try {
+			con = dataFactory.getConnection();
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, id);
+			pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	 }
+	 
+}

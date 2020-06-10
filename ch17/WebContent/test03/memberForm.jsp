@@ -31,10 +31,9 @@
 						if(data == "usable"){
 							alert("사용가능한 아이디 입니다.");
 							idck = 1;
-							oEle1.readonly = true;
+							oEle1.readOnly = true;
 						}else{
 							alert("이미 존재하는 아이디 입니다.");
-							$("#id").focus();
 						}
 					},
 					 error : function(error) {
@@ -112,6 +111,7 @@
 					<td>
 						<input type="button" value="가입하기" onClick="checkInput()">
 						<input type="reset" value="다시입력">
+						<input type="button" value="리스트" onClick="location.href='${contextPath}/member/listMembers.do'">
 					</td>
 				</tr>
 			</table>

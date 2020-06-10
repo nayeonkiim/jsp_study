@@ -80,7 +80,7 @@ request.setCharacterEncoding("UTF-8");
           <td>${mem.email }</td>     
           <td>${mem.joinDate}</td>
           <td><a href="${contextPath}/member/modMemberForm.do?id=${mem.id }">수정</a></td>
-		  <td><a href="${contextPath}/member/delMember.do?id=${mem.id }">삭제</a></td>
+		  <td><a href="${contextPath}/test03/delMemberFind.jsp?id=${mem.id }">삭제</a></td>
                
        </tr>
      </c:forEach>
