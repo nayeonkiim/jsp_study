@@ -165,5 +165,8 @@ public class MemberDao {
 			e.printStackTrace();
 		}
 	 }
+	
+
+	
 	 
 }

@@ -1,0 +1,35 @@
+@charset "UTF-8";
+
+.sec_login{
+	height: 400px;
+	position: relative;
+	border: 1px solid #d3d3d3;
+}
+
+.loginForm{
+	position: absolute;
+	left: 30%;
+	top: 10%;
+}
+
+.loginForm h1{
+	font-size: 50px;
+	padding-bottom: 20px;
+}
+.loginForm .logId{
+	width: 350px;
+	height: 40px;
+	margin-bottom: 10px;
+}
+
+.loginForm .logPwd{
+	width: 350px;
+	height: 40px;
+
+}
+
+.loginForm .btnLog{
+	width: 350px;
+	height: 40px;
+	margin-bottom: 10px;
+}

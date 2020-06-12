@@ -1,0 +1,23 @@
+@charset "UTF-8";
+
+
+.cls1 {
+	font-size:40px;
+	text-align:center;
+	padding: 10px 0;
+}
+	   
+.secList
+{
+	position : relative;
+	height: 400px;
+	border: 1px solid #d3d3d3;
+}
+
+.secList .tablePos{
+	position : absolute;
+	left: 28%;
+	top: 20%;
+}
+
+

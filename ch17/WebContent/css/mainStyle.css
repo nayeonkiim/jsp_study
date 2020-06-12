@@ -1,0 +1,91 @@
+@charset "UTF-8";
+
+*{
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+.inner{
+	max-width: 980px;
+	margin: 0 auto;
+}
+
+a{
+	text-decoration: none;
+	color: #000;
+}
+
+li{
+	list-style: none;
+}
+
+header{
+	height: 100px;
+}
+
+.hdDesign{
+	margin-top: 40px;
+	position: relative;
+}
+
+.hdDesign .uDesign{
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+}
+
+.hdDesign .uDesign h2{
+	float: left;
+	/* font-size: 100px; */
+}
+
+.hdDesign .uDesign .input{
+	float: left;
+	margin-left: 230px;
+}
+
+.hdDesign .uDesign .input .inputFrm{
+	width: 300px;
+	height: 30px;
+
+}
+
+.hdDesign .uDesign .btngrp{
+	float: right;
+}
+
+.hdDesign .uDesign .btngrp .join{
+	padding-left: 40px;
+}
+
+.hdDesign .uDesign .btngrp a:hover{
+	color: blue;
+}
+
+header .main-menu{
+	position: relative;	
+
+}
+
+header .main-menu ul{
+	border-top: 1px solid #d3d3d3;
+	position: relative;	
+	left: 0;
+	top:70px;
+}
+
+header .main-menu ul>li{
+	float: left;
+	padding-right: 98px;
+	padding-bottom: 10px;
+	padding-top: 10px;
+	border-bottom: 1px solid #d3d3d3;
+}
+header .main-menu ul a:hover{
+	color: blue;
+}
+header .main-menu ul>li:last-child{
+	padding-right: 0;
+}

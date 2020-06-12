@@ -1,0 +1,49 @@
+@charset "UTF-8";
+
+
+.secMem{
+	height: 400px;
+	position: relative;
+	border: 1px solid #d3d3d3;
+}
+
+.secMem .secPo{
+	position: absolute;
+	left : 30%;
+	top: 10%;
+}
+
+.secMem .secPo h1{
+	font-size: 50px;
+	padding-bottom: 20px;
+}
+
+#id{
+	width: 200px;
+	height: 30px;
+	margin-bottom: 15px;
+}
+
+#pwd{
+	width: 200px;
+	height: 30px;
+	margin-bottom: 15px;
+}
+
+#name{
+	width: 200px;
+	height: 30px;
+	margin-bottom: 15px;
+}
+
+#email{
+	width: 200px;
+	height: 30px;
+	margin-bottom: 15px;
+}
+
+.secMem .secPo .btnMem{
+	width: 260px;
+	height: 30px;
+	margin-bottom: 10px;
+}

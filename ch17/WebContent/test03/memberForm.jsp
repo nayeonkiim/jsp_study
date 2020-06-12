@@ -10,6 +10,8 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>회원 가입창</title>
+		<link rel="stylesheet" href="${contextPath }/css/mainStyle.css">
+		<link rel="stylesheet" href="${contextPath }/css/memStyle.css">
 		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 		<script type="text/javascript">
 			var idck = 0;
@@ -66,55 +68,75 @@
 				document.frm.submit();
 			}
 		</script>
+	</head>
 	<body>
-		<form method="post" action="${contextPath }/member/addMember.do" name="frm">
-			<h1>회원가입</h1>
-			<table>
-				<tr>
-					<td>
-						<p>아이디</p>
-					</td>
-					<td>
-						<input type="text" name="id" id="id">
-						<input type="button" value="중복확인" id="btn" onClick="fn_process()">
-						
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<p>비밀번호</p>
-					</td>
-					<td>
-						<input type="text" name="pwd" id="pwd">
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<p>이름</p>
-					</td>
-					<td>
-						<input type="text" name="name" id="name">
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<p>이메일</p>
-					</td>
-					<td>
-						<input type="text" name="email"  id="email">
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<p>&nbsp;</p>
-					</td>
-					<td>
-						<input type="button" value="가입하기" onClick="checkInput()">
-						<input type="reset" value="다시입력">
-						<input type="button" value="리스트" onClick="location.href='${contextPath}/member/listMembers.do'">
-					</td>
-				</tr>
-			</table>
-		</form>
+		<header class="inner header">
+			<div class="hdDesign">
+				<div class="uDesign">
+					<h2><a href="${contextPath }/main.jsp">YeonCom</a></h2>
+					<div class="input">
+						<input type="text" name="inputFrm" class="inputFrm">
+						<a href="#" >
+							<i class="fas fa-search-plus"></i>
+						</a>
+					</div>
+					<div class="btngrp">
+						<a href="${contextPath }/member/loginForm.do" class="login">로그인</a>
+						<a href="${contextPath }/member/memberForm.do" class="join">회원가입</a>
+					</div>
+				</div>
+			</div>
+		</header>
+		<section class="inner secMem">
+			<div class="secPo">
+				<form method="post" action="${contextPath }/member/addMember.do" name="frm">
+					<h1>Join Us</h1>
+						<table>
+							<tr>
+								<td>
+									<p>아이디</p>
+								</td>
+								<td>
+									<input type="text" name="id" id="id">
+									<input type="button" value="중복확인" id="btn" onClick="fn_process()">
+									
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<p>비밀번호</p>
+								</td>
+								<td>
+									<input type="text" name="pwd" id="pwd">
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<p>이름</p>
+								</td>
+								<td>
+									<input type="text" name="name" id="name">
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<p>이메일</p>
+								</td>
+								<td>
+									<input type="text" name="email"  id="email">
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<p>&nbsp;</p>
+								</td>
+								<td>
+									<input type="button" value="가입하기" onClick="checkInput()" class="btnMem"><br>
+								</td>
+							</tr>
+						</table>
+					</form>
+				</div>
+		</section>
 	</body>
 </html>
