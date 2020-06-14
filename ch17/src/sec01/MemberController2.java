@@ -1,4 +1,4 @@
-package sec02.ex02;
+package sec01;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -36,7 +36,7 @@ public class MemberController2 extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html;charset=utf-8");
 		PrintWriter out = response.getWriter();
-		HttpSession session ;
+		HttpSession session;
 		String action = request.getPathInfo();
 		System.out.println("action:" + action);
 	
@@ -44,7 +44,7 @@ public class MemberController2 extends HttpServlet {
 		if (action == null || action.equals("/listMembers.do")) {
 			List<MemberVO> memberList = memberDao.listMember();
 			request.setAttribute("memberList", memberList);
-			nextPage = "/test03/listMembers.jsp";
+			nextPage = "/members/listMembers.jsp";
 		// addMember.do 들어오면 member 더하기 해주고 listMembers.jsp로 이동
 		} else if (action.equals("/addMember.do")) {
 			String id = request.getParameter("id");
@@ -57,10 +57,10 @@ public class MemberController2 extends HttpServlet {
 			nextPage = "/main.jsp";
 		// 회원가입 누르면 회원가입 폼으로 이동
 		} else if (action.equals("/memberForm.do")) {
-			nextPage = "/test03/memberForm.jsp";
+			nextPage = "/members/memberForm.jsp";
 		//마이페이지 버튼 클릭시	
 	    }else if(action.equals("/myPage.do")) {
-	    	nextPage = "/test03/myPage.jsp";
+	    	nextPage = "/members/myPage.jsp";
 	    //비밀번호 입력해서 해당 비밀번호면 	그 아이디에 해당하는 정보들 가져옴
 		}else if(action.equals("/modMemberForm.do")){
 		     String id=request.getParameter("id");
@@ -68,17 +68,17 @@ public class MemberController2 extends HttpServlet {
 			if(memberDao.equalMember(id,pwd)) {
 		    	 MemberVO memInfo = memberDao.findMember(id);
 		    	 request.setAttribute("memInfo", memInfo);
-			     nextPage="/test03/modMemberForm.jsp";
+			     nextPage="/members/modMemberForm.jsp";
 			}else {
 				 request.setAttribute("msg", "matchFail");
-			     nextPage="/test03/myPage.jsp";
+			     nextPage="/members/myPage.jsp";
 			}
 		//관리자의 경우 수정
 		}else if(action.equals("/directMod.do")) {
 			String id = request.getParameter("id");
 			MemberVO memInfo = memberDao.findMember(id);
 	    	request.setAttribute("memInfo", memInfo);
-		    nextPage="/test03/modMemberForm.jsp";
+		    nextPage="/members/modMemberForm.jsp";
 		//수정된 것들 db에 저장
 		}else if(action.equals("/modMember.do")){
 		     String id=request.getParameter("id");
@@ -97,7 +97,7 @@ public class MemberController2 extends HttpServlet {
 			 nextPage="/member/listMembers.do";
 		//로그인 버튼 누르면 로그인 창으로 이동
 	    }else if(action.equals("/loginForm.do")){
-	    	nextPage = "/test03/loginForm.jsp";
+	    	nextPage = "/members/loginForm.jsp";
 	    // 로그인 위해 sql에서 아이디 비번 비교 실행
 	    }else if(action.equals("/loginMember.do")) {
 	    	String id = request.getParameter("id");

@@ -55,6 +55,13 @@
 		<title>항상 Yeon~ 커뮤니티 입니다!</title>
 		<link rel="stylesheet" href="${contextPath }/css/mainStyle.css">
 	    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+		<script type="text/javascript">
+			$("#sesCheck").click(function(e){
+				e.preventDefault();
+				alert("e.preventDefault()");
+			});
+		
+		</script>
 	</head>
 	<body>
 		<header class="inner header">
@@ -81,7 +88,7 @@
 			</div>
 			<div class="main-menu">
 				<ul>
-					<li><a href="#">뉴스</a></li>
+					<li><a id="sesCheck" href="${contextPath }/board/Newslist.do?start=0&end=10">뉴스</a></li>
 					<li><a href="#">영화</a></li>
 					<li><a href="#">책</a></li>
 					<li><a href="#">웹툰</a></li>

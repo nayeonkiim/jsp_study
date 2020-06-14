@@ -43,7 +43,7 @@
 	totalRecord = bMgr.getTotalCount(keyField, keyWord);
 	totalPage = (int)Math.ceil((double)totalRecord/numPerPage);
 	nowBlock = (int)Math.ceil((double)nowPage/pagePerBlock);
-	totalBlock = (int)Math.ceil((double)totalRecord/pagePerBlock);
+	totalBlock = (int)Math.ceil((double)totalPage/pagePerBlock);
 %>
 
 <html>
@@ -93,7 +93,7 @@
 			<tr>
 				<td align="center" colspan="2">
 				<% 	
-				vlist = bMgr.getBoardList(keyField, keyWord, start, end);
+					vlist = bMgr.getBoardList(keyField, keyWord, start, end);
 					listSize = vlist.size(); /* 브라우저 화면에 나타날 게시물 개수  */
 					if(vlist.isEmpty()){
 						out.println("등록된 게시물이 없습니다.");
@@ -108,6 +108,8 @@
 					<td>조회수</td>
 				</tr>
 			<%
+			//블럭 하나하나를 누를때마다 이 for문이 실행되어 만약 22개의 게시물이 있어서 블럭 3을 눌럿다면
+			// listSize는 2가 된다.
 				for(int i=0;i<numPerPage; i++){
 					if(i == listSize) break;
 					

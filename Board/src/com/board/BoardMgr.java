@@ -1,4 +1,4 @@
-package com.board;
+                          package com.board;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -44,7 +44,7 @@ public class BoardMgr {
 		try {
 			con = pool.getConnection();
 			if(keyWord.equals("")) { //input 창에 들어온게 없으면
-				sql = "SELECT * FROM tblboard ORDER BY ref desc, pos limit ?, ?";   //ref는 insertBoard에서 처리
+				sql = "SELECT * FROM tblboard ORDER BY ref desc limit ?, ?";   //ref는 insertBoard에서 처리
 				pstmt = con.prepareStatement(sql);
 				pstmt.setInt(1, start);
 				pstmt.setInt(2, end);
@@ -139,16 +139,18 @@ public class BoardMgr {
 					new DefaultFileRenamePolicy());
 			
 			if(multi.getFilesystemName("filename") != null) {
+				// 파일의 이름 받아올때
 				filename = multi.getFilesystemName("filename");
 				filesize = (int)multi.getFile("filename").length();
 			}
 			
 			String content = multi.getParameter("content");
+			// 글 저장시 html 태그 적용 안되고 text형태로 저장하고 싶은 경우
 			if(multi.getParameter("contentType").equalsIgnoreCase("TEXT")) {
 				content = UtilMgr.replace(content, "<", "&lt;");
 			}
 			
-			sql = "INSERT INTO tblBoard (name,content,subject,ref,pos,depth,regdate,pass,count,ip,filename,filesize)";
+			sql = "INSERT INTO tblBoard (name,content,subject,ref,pos,depth,regdate,pass,count,ip,filename,filesize,id)";
 			sql += "VALUES(?,?,?,?,0,0,now(),?,0,?,?,?)";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, multi.getParameter("name"));

@@ -1,4 +1,4 @@
-package sec02.ex02;
+package sec01;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
