@@ -2,12 +2,13 @@
     pageEncoding="UTF-8" isELIgnored="false" import="java.util.*, sec02.*"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>    
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-   
 <c:set var="contextPath" value="${pageContext.request.contextPath }"/>
 
 <%
-	List<BoardVO> boardList = (List<BoardVO>)request.getAttribute("boardList");
-	int vlist = boardList.size();
+	request.setCharacterEncoding("utf-8");
+
+	List<BoardVO> boardList = null;
+	int vlist = 0;
 	
 	int totalRecord = 0;
 	int numPerPage = 10;
@@ -16,23 +17,43 @@
 	int totalPage = 0;
 	int totalBlock = 0;
 	
-	int nowPage = 1;
-	int nowBlock =1;
+	int nowPage=1;
+	int nowBlock=1;
 	
 	int start = 0;
 	int end = 10;
 	
 	/*[1][2] 여기 누를때마다 들어옹는 값 받는 코드 써주기*/
 	
+	String keyWord="", keyField="";
+	if(request.getParameter("keyWord") != null){
+		keyWord = request.getParameter("keyWord");
+		keyField = request.getParameter("keyField");
+	}
+	
+	if(request.getParameter("reload") != null){
+		if(request.getParameter("reload").equals("true")){
+			keyWord="";
+			keyField="";
+		}
+	}
+	if(request.getParameter("nowPage") != null){
+		nowPage = Integer.parseInt(request.getParameter("nowPage"));  
+	}
+	
 	start = (nowPage * numPerPage) - numPerPage;
 	end = numPerPage;
 	
-	totalRecord = (Integer)request.getAttribute("boardCount");
+	totalRecord = (int)request.getAttribute("boardCount");
 	totalPage = (int)Math.ceil((double)totalRecord/numPerPage);
 	totalBlock = (int)Math.ceil((double)totalPage/pagePerBlock);
 	nowBlock = (int)Math.ceil((double)nowPage/pagePerBlock);
-	
 %>
+
+<c:set var="totalRecord" value="<%=totalRecord %>"/>
+<c:set var="nowPage" value="<%=nowPage %>"/>
+<c:set var="numPerPage" value="<%=numPerPage %>"/>
+			
 
 <!DOCTYPE html>
 <html>
@@ -45,6 +66,17 @@
 			function idCheck(){
 				alert("로그인 먼저 해주세요!");
 				location.href="${contextPath}/members/loginForm.jsp";
+			}
+			function paging(page){
+				document.readFrm.nowPage.value = page;
+				document.readFrm.submit();
+			}
+			function check(){
+				frm = document.searchFrm;
+				if(frm.keyWord.value == ""){
+					alert("키워드를 입력해주세요.");
+				}
+				frm.submit();
 			}
 		</script>
 	</head>
@@ -73,25 +105,26 @@
 			</div>
 		</header>
 		<section class="inner secNews1">
+
 			<div class="newsStyle">
 				<h2>News Board</h2>
 				<table>
 					<tr>
-						<td>Total :<%=totalRecord %> Articles
-							(<%=nowPage %>/<%=totalPage %>Pages)</td>
+						<td>Total :${totalRecord } Articles
+							(${nowPage }/<%=totalPage %> Pages)</td>
 						
 					</tr>
 				</table>
 				<table>
 					<tr>
 						<td>
-						<table>
-							<tr>
-								<td class="b1">번  호</td>
-								<td class="b1">제  목</td>
-								<td class="b1">아이디</td>
-								<td class="b1">날  짜</td>
-								<td class="b1">조회수</td>
+						<table >
+							<tr align="center">
+								<td class="b1"><div style="margin-left:10px">번  호</div></td>
+								<td class="b1"><div style="margin-left:10px">제  목</div></td>
+								<td class="b1"><div style="margin-left:10px">아이디</div></td>
+								<td class="b1"><div style="margin-left:10px">등록날짜</div></td>
+								<td class="b1"><div style="margin-left:10px">조회수</div></td>
 							</tr>
 							<c:choose>
 								<c:when test="${empty boardList}">
@@ -103,27 +136,30 @@
 								</c:when>
 								<c:when test="${!empty boardList }">
 									<%
-										for(int i=0; i<numPerPage; i++){
-											if(i == vlist) break;
-										
+										boardList = (List<BoardVO>)request.getAttribute("boardList");
+										vlist = boardList.size();
 									%>
-										<c:forEach var="board" items="${boardList }">
-											<tr>
-												<td><%=totalRecord-((nowPage-1)*numPerPage)-i %></td>
-												<td>
-													<c:if test="${board.depth} > 0" >
-														<c:forEach var="i" begin="0" end="${board.depth }" step="1">
-															&nbsp;&nbsp;
-														</c:forEach>
-													</c:if>
-													<a href="${contextPath }/board/ReadBoard.do">${board.subject }</a>
-												</td>
-												<td>${board.id }</td>
-												<td>${board.regdate }</td>
-												<td>${board.count }</td>
-											</tr>
-										</c:forEach>
-									<%} %>
+									<c:forEach var="board" items="${boardList}" varStatus="i">
+										<c:if test="${ i.index} == <%=vlist %>">
+											break;
+										</c:if>
+										<tr align="center">
+											<td> ${totalRecord - ((nowPage-1)*numPerPage) - i.index }</td>
+											<td>
+												<div style="margin-left:5px">
+												<c:if test="${board.depth }> 0" >
+													<c:forEach var="i" begin="0" end="${board.depth }" step="1">
+														&nbsp;&nbsp;
+													</c:forEach>
+												</c:if>
+													<a href="${contextPath }/board/ReadBoard.do?num=${board.num}">${board.subject }</a>
+												</div>
+											</td>
+											<td><div style="margin-left:5px">${board.id }</div></td>
+											<td><div style="margin-left:5px">${board.regdate }</div></td>
+											<td><div style="margin-left:5px">${board.count }</div></td>
+										</tr>
+									</c:forEach>
 								</c:when>			
 							</c:choose>
 						</table>
@@ -135,16 +171,16 @@
 				<tr>
 					<td>
 					<%
-						int startPage = (nowPage-1)*pagePerBlock + 1;
-						int endPage = (startPage + pagePerBlock) > totalPage ? startPage + pagePerBlock : totalPage+1;
+						int startPage = (nowBlock-1)*pagePerBlock + 1;
+						int endPage = (startPage + pagePerBlock) < totalPage ? startPage + pagePerBlock : totalPage+1;
 						
 						if(totalPage > 0){
-							if(nowBlock > 1){%>
+							if(nowBlock > 1){ %>
 								<a href="javascript:block('<%=nowBlock - 1%>')">prev...</a> 
 							<%} %>&nbsp;
 				
 							<%for(;startPage < endPage; startPage++) {%>
-								<a href="paging('<%=startPage %>')">
+								<a href="javascript:paging('<%=startPage %>')">
 									<%if(startPage == nowPage){ %>
 										<font color="blue"> <%} %>
 											[<%=startPage %>]
@@ -170,8 +206,27 @@
 					</td>
 				</tr>
 			</table>
-			
-			
+			<form name="searchFrm" method="post" action="${contextPath}/board/Newslist.do">
+				<table align="center">
+					<tr>
+						<td align="center">
+							<select name="keyField">
+								<option value="id">아이디</option>
+								<option value="subject">제  목</option>
+								<option value="content">내  용 </option>
+							</select>
+							<input name="keyWord">
+							<input type="button" value="찾기" onClick="javascript:check()">
+							
+						</td>
+					</tr>
+				</table>
+			</form>
+			<form name="readFrm">
+				<input type="hidden" name="nowPage" value="<%=nowPage %>">
+				<input type="hidden" name="keyField" value="<%=keyField %>">
+				<input type="hidden" name="keyWord" value="<%=keyWord%>">
+			</form>
 		</div>	
 	</section>
 		

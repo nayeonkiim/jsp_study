@@ -11,7 +11,34 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>게시물 쓰기</title>
+		<link rel="stylesheet" href="${contextPath }/css/mainStyle.css">
 		<link rel="stylesheet" href="${contextPath }/css_B/writeStyle.css">
+		<script type="text/javascript">
+			function formCheck(){
+				frm = document.postFrm;
+				if(frm.name.value == ""){
+					alert("이름을 입력하세요");
+					return;
+				}
+				if(frm.subject.value == ""){
+					alert("제목을 입력하세요");
+					return;
+				}
+				if(frm.content.value == ""){
+					alert("내용을 입력하세요");
+					return;
+				}
+				if(frm.pass.value == ""){
+					alert("비밀번호를 입력하세요");
+					return;
+				}
+				if(frm.pass.value == ""){
+					alert("비밀번호를 입력하세요");
+					return;
+				}
+				frm.submit();
+			}
+		</script>
 	</head>
 	<body>
 		<header class="inner header">
@@ -42,7 +69,7 @@
 			<div>
 				<table>
 					<tr>
-						<td colspan="2" align="center">글쓰기</td>
+						<td colspan="2" align="center"><h2>글쓰기</h2></td>
 					</tr>
 				</table>
 				<form action="${contextPath }/board/DoWrite.do" name="postFrm" method=post enctype="multipart/form-data">
@@ -87,9 +114,9 @@
 						</tr>
 						<tr>
 							<td colspan="2" align="center">
-								<input type="submit" value="등록">
+								<input type="button" value="등록" onClick="formCheck()">
 								<input type="reset" value="다시쓰기">
-								<input type="button" value="리스트" onClick="${contextPath}/board/Newslist.do">
+								<input type="button" value="리스트" onClick="location.href='${contextPath}/board/Newslist.do?start=0'">
 							</td>
 						</tr>
 					</table>

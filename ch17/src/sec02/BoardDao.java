@@ -17,8 +17,6 @@ import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 public class BoardDao {
 	private DataSource dataSource;
-	private Connection con;
-	private PreparedStatement pstmt;
 	private String SAVEFOLDER ="C:/Users/rlask/git/jsp_study/ch17/WebContent/fileStore";
 	private String ENCTYPE = "utf-8";
 	private int MAXSIZE = 5*1024*1024;
@@ -34,23 +32,26 @@ public class BoardDao {
 	
 	public List<BoardVO> selectBoardList(String keyField, String keyWord, int start, int end){
 		List<BoardVO> blist = new ArrayList<BoardVO>();
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs =null;
 		try {
 			con = dataSource.getConnection();
-			if(keyWord == null) {
+			if(keyWord == null || keyWord.equals("")) {
 				String sql = "select * from t_board order by ref desc limit ?,?";
 				pstmt = con.prepareStatement(sql);
 				pstmt.setInt(1, start);
 				pstmt.setInt(2, end);
 			}else {
-				String sql = "select * from t_board where "+keyField+" like ? order by ref desc limit ?,?";
+				String sql = "select * from t_board where "+keyField+" like ? order by ref desc, pos limit ?,?";
 				pstmt = con.prepareStatement(sql);
 				pstmt.setString(1, '%'+keyWord+'%');
 				pstmt.setInt(2, start);
 				pstmt.setInt(3, end);
 			}
-			ResultSet rs = pstmt.executeQuery();
+			rs = pstmt.executeQuery();
 			while(rs.next()) {
-				BoardVO vo =new BoardVO();
+				BoardVO vo = new BoardVO();
 				vo.setNum(rs.getInt("num"));
 				vo.setId(rs.getString("id"));
 				vo.setName(rs.getString("name"));
@@ -59,6 +60,7 @@ public class BoardDao {
 				vo.setPos(rs.getInt("pos"));
 				vo.setDepth(rs.getInt("depth"));
 				vo.setRef(rs.getInt("ref"));
+				vo.setRegdate(rs.getDate("regdate"));
 				vo.setPass(rs.getString("pass"));
 				vo.setCount(rs.getInt("count"));
 				vo.setFilename(rs.getString("filename"));
@@ -77,20 +79,26 @@ public class BoardDao {
 	//총 게시글 수 리턴
 	public int totalCount(String keyField, String keyWord) {
 		int count = 0;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs =null;
 		try {
 			con = dataSource.getConnection();
-			if(keyWord == "") {
-				String sql = "select count(*) from t_board";
+			if(keyWord == null || keyWord.equals("")) {
+				String sql = "select count(num) from t_board";
 				pstmt = con.prepareStatement(sql);
 			}else {
-				String sql = "select count(*) from t_board where "+keyField+" like ?";
+				String sql = "select count(num) from t_board where " + keyField + " like ?";
 				pstmt = con.prepareStatement(sql);
 				pstmt.setString(1, '%'+keyWord+'%');
 			}	
-			ResultSet rs = pstmt.executeQuery();
+			rs = pstmt.executeQuery();
 			if(rs.next()) {
 				count = rs.getInt(1);
 			}
+			rs.close();
+			pstmt.close();
+			con.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -98,8 +106,9 @@ public class BoardDao {
 	}
 
 	public void insertBoard(HttpServletRequest request) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		int result = 0;
 		MultipartRequest multi = null;
 		int filesize = 0;
 		String filename = null;
@@ -141,10 +150,62 @@ public class BoardDao {
 			pstmt.setString(6, filename);
 			pstmt.setInt(7, filesize);
 			pstmt.setString(8, multi.getParameter("id"));
-			result = pstmt.executeUpdate();
+			pstmt.executeUpdate();
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
 		
+	}
+	
+	//기존 글 읽어오기
+	public BoardVO readDetails(int num) {
+		BoardVO bVo = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			con = dataSource.getConnection();
+			String sql = "select * from t_board where num=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, num);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				bVo = new BoardVO();
+				bVo.setNum(rs.getInt("num"));
+				bVo.setId(rs.getString("id"));
+				bVo.setName(rs.getString("name"));
+				bVo.setSubject(rs.getString("subject"));
+				bVo.setContent(rs.getString("content"));
+				bVo.setPos(rs.getInt("pos"));
+				bVo.setDepth(rs.getInt("depth"));
+				bVo.setRef(rs.getInt("ref"));
+				bVo.setRegdate(rs.getDate("regdate"));
+				bVo.setPass(rs.getString("pass"));
+				bVo.setCount(rs.getInt("count"));
+				bVo.setFilename(rs.getString("filename"));
+				bVo.setFilesize(rs.getInt("filesize"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return bVo;
+	}
+	public boolean equalMember(String id, String pwd) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		boolean result = false;
+		String sql = "select if(count(*)=1, 'true','false') as result from t_member where id=? and pwd=?";
+		try {
+			con = dataSource.getConnection();
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, id);
+			pstmt.setString(2, pwd);
+			ResultSet rs = pstmt.executeQuery();
+			rs.next();
+			result = Boolean.parseBoolean(rs.getString("result"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 }

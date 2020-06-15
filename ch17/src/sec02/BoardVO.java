@@ -1,5 +1,7 @@
 package sec02;
 
+import java.sql.Date;
+
 public class BoardVO {
 	private int num;
 	private String id;
@@ -9,7 +11,7 @@ public class BoardVO {
 	private int pos;
 	private int depth;
 	private int ref;
-	private String regdate;
+	private Date regdate;
 	private String pass;
 	private int count;
 	private String filename;
@@ -63,11 +65,11 @@ public class BoardVO {
 	public void setRef(int ref) {
 		this.ref = ref;
 	}
-	public String getRegdate() {
+	public Date getRegdate() {
 		return regdate;
 	}
-	public void setRegdate(String regdate) {
-		this.regdate = regdate;
+	public void setRegdate(Date date) {
+		this.regdate = date;
 	}
 	public String getPass() {
 		return pass;
