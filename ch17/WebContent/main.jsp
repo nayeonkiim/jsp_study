@@ -82,6 +82,7 @@
 						<%}else {%>
 							<a href="${contextPath }/member/myPage.do?id=<%=session.getAttribute("id") %>" class="join">마이 페이지</a>
 						<%}
+						
 					}%>
 					
 					</div>
@@ -100,6 +101,5 @@
 				</ul>
 			</div>
 		</header>
-
 	</body>
 </html>

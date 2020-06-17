@@ -15,6 +15,8 @@ import javax.sql.DataSource;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
+import sec01.MemberVO;
+
 public class BoardDao {
 	private DataSource dataSource;
 	private String SAVEFOLDER ="C:/Users/rlask/git/jsp_study/ch17/WebContent/fileStore";
@@ -208,4 +210,27 @@ public class BoardDao {
 		}
 		return result;
 	}
+	
+	public int modBoard(int num, String name, String subject, String content, String filename) {
+		int result = 0;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		String sql = "update t_board set name=?, subject=?, content=?, filename=? where num=?";
+		try {
+			con = dataSource.getConnection();
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, name);
+			pstmt.setString(2, subject);
+			pstmt.setString(3, content);
+			pstmt.setString(4, filename);
+			pstmt.setInt(5, num);
+			result = pstmt.executeUpdate();
+			pstmt.close();
+			con.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
 }

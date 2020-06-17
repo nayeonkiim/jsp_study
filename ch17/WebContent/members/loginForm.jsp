@@ -52,7 +52,7 @@
 					<h1>LogIn</h1>
 					<input type="text" name="id" placeholder="아이디" class="logId"><br>
 					<input type="password" name="pwd" placeholder="비밀번호" class="logPwd"><br><br>
-					<input type="button" value="로그인" class="btnLog" onClick="isFull()">
+					<input type="button" value="로그인" class="btnLog" onClick="isFull()"><br>
 					<input type="button" value="회원가입" onClick="location.href='${contextPath }/member/memberForm.do'" class="btnLog">
 				</form>			
 			</div>

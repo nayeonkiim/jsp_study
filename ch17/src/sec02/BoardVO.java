@@ -17,6 +17,16 @@ public class BoardVO {
 	private String filename;
 	private int filesize;
 	
+	public BoardVO() {}
+	public BoardVO(int num,String name, String subject, String content, String filename, String id) {
+		this.num = num;
+		this.name = name;
+		this.subject = subject;
+		this.content = content;
+		this.filename = filename;
+		this.id = id;
+	}
+	
 	public int getNum() {
 		return num;
 	}

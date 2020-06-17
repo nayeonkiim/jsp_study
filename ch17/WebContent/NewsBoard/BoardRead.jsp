@@ -64,8 +64,9 @@
 						<td> ${bVo.filename }</td>
 					</tr>	
 				</table>
-				<div>
-					<input type="button" value="수정하기" onClick="location.href='${contextPath}/board/idCheck.do&num=${bVo.num}'">
+				<div class="buttonSize">
+					<input type="button" value="수정하기" onClick="location.href='${contextPath}/board/idCheck.do?id=${bVo.id }&num=${bVo.num }'">
+					<input type="button" value="뒤로" onClick="history.back(-1)">
 				</div>
 			</div>
 		</section>

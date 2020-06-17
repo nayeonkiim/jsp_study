@@ -123,7 +123,7 @@
 			%>
 				<tr>
 					<td align="center">
-					<%=totalRecord-((nowPage-1)*numPerPage)-i %> <!--게시번호  -->
+						<%=totalRecord-((nowPage-1)*numPerPage)-i %> <!--게시번호  -->
 					</td>
 					<td>
 					<%
@@ -196,6 +196,7 @@
 							<input type="button" value="찾기" onClick="javascript:check()">
 							<input type="hidden" name="nowPage" value="1">
 						</td>
+					</tr>
 				</table>
 			</form>
 			<!-- 처음으로 눌렀을 때 list.jsp로 listFrm 폼이 보내져  -->

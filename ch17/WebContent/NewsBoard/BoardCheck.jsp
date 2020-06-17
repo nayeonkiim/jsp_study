@@ -6,7 +6,19 @@
 <%
 	request.setCharacterEncoding("utf-8");
 	boolean result = false;
-	String tid = request.getParameter("id");
+
+	if(session == null || session.getAttribute("id") == null){
+		out.println("<script>");
+		out.println("alert('로그인 먼저 해주세요!');");
+		out.println("history.back(-1)");
+		out.println("</script>");
+	}	
+	if(!session.getAttribute("id").equals(request.getAttribute("id"))){
+		out.println("<script>");
+		out.println("alert('수정권한이 없습니다.');");
+		out.println("history.back(-1)");
+		out.println("</script>"); 
+	}
 %>
 <!DOCTYPE html>
 <html>
@@ -22,6 +34,17 @@
 		<title>마이페이지</title>
 		<link rel="stylesheet" href="${contextPath }/css/mainStyle.css">
 		<link rel="stylesheet" href="${contextPath }/css/myPage.css">
+		<script type="text/javascript">
+			function check(){
+				var frm = document.findFrm;
+				if(frm.pwd.value == ""){
+					alert("비밀번호를 입력해주세요.");
+					frm.pwd.focus();
+					return;
+				}
+				frm.submit();
+			}
+		</script>
 	</head>
 	<body>
 		<header class="inner header">
@@ -49,17 +72,16 @@
 		</header>
 		<section class="inner secDesign">
 			<div class="modDesign">
-				<form action="${contextPath }/board/boardFix.do" method=post name="findFrm">
-					<%if(!session.getAttribute("id").equals("tid")) {
-						out.println("<script>alert('수정 권한이 없습니다.');</script>");
-					}else{%>
+				<%if(session.getAttribute("id").equals(request.getAttribute("id"))){%>
+					<form action="${contextPath }/board/boardFix.do" method=post name="findFrm">
 						아이디: <%=session.getAttribute("id")%> <br>
 						비밀번호: <input type="password" name="pwd" class="Pwd"><br>
 						<input type="hidden" value="<%=session.getAttribute("id")%>" name="id" >					
-						<input type="submit" value="확인" class="ok">
-					<%} %>
-				</form>
-			</div>
+						<input type="hidden" value="<%=request.getAttribute("num")%>" name="num">
+						<input type="button" value="확인" class="ok" onClick="check()">
+					</form>
+				<%} %>
+				</div>
 		</section>
 	</body>
 </html>
